@@ -1,4 +1,4 @@
-my_packages = c('jsonlite', 'batchscr', 'curl')
+my_packages = c('jsonlite', 'batchscr', 'curl', 'batchscr')
 
 install_if_missing = function(p) {
   if (p %in% rownames(installed.packages()) == FALSE) {
