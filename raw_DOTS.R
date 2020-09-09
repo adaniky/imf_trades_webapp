@@ -1,7 +1,7 @@
 # get trades data from IMF website
 data_DIR = getwd()  
 
-gfi_dates <- 2020:2000
+gfi_dates <- 2019:2000
 cif_margin_exog <- .06       # CIF/FOB margin applied to imports for countries not reporting on FOB basis (Marini-Dippelsman-Stanger[2018] p. 11)
 
 get_imf_date <- function(gfi_dates, trade_type, countries)
