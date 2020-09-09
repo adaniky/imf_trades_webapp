@@ -4,14 +4,13 @@ library(shiny)
 shinyUI(pageWithSidebar(
   
   # Application title
-  headerPanel("Europian Country Trades"),
+  headerPanel("European countries trades"),
   
   # Sidebar with controls to select a dataset and specify the number
   # of observations to view
   sidebarPanel(
     selectInput("country", "Select country:", 
-                choices = iso_countries),
-    
+                choices = countries),
     selectInput("year", "Select year:", 
                 choices = gfi_dates),
     selectInput("type", "Select trade type:", 

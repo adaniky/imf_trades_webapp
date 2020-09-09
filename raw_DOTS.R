@@ -1,14 +1,15 @@
+# get trades data from IMF website
 data_DIR = getwd()  
 
-  gfi_dates <- 2020:2000
-  cif_margin_exog <- .06       # CIF/FOB margin applied to imports for countries not reporting on FOB basis (Marini-Dippelsman-Stanger[2018] p. 11)
-  
-  get_imf_date <- function(gfi_dates, trade_type, countries)
-  { 
-    res <-data.frame(ind=character(0), i_iso=character(0), j_iso=character(0),year=integer(0),  value=numeric(0))
-    min_date <- min(gfi_dates)
-    max_date <- max(gfi_dates)
-    for (country in countries) {
+gfi_dates <- 2020:2000
+cif_margin_exog <- .06       # CIF/FOB margin applied to imports for countries not reporting on FOB basis (Marini-Dippelsman-Stanger[2018] p. 11)
+
+get_imf_date <- function(gfi_dates, trade_type, countries)
+{ 
+  res <-data.frame(ind=character(0), i_iso=character(0), j_iso=character(0),year=integer(0),  value=numeric(0))
+  min_date <- min(gfi_dates)
+  max_date <- max(gfi_dates)
+  for (country in countries) {
         cat(paste('Gettin data from IMF for country:', country, sep='' ))
         url_rep <- paste(
           'http://dataservices.imf.org/REST/SDMX_JSON.svc/CompactData/DOT/A.',
@@ -89,9 +90,9 @@ data_DIR = getwd()
     res<-res[!is.na(res$year),]
     return(res)
   }
- 
-    bridge <- fread(file=paste(data_DIR,"/countries.csv",sep=""),header=TRUE,colClasses=c("character","character"), sep=",",na.strings="")
-    bridge <- as.data.frame(bridge)
-    colnames(bridge) <- c('i_iso', 'i_iso_name')
-    iso_countries <- bridge[, 'i_iso']
-    trade_types = c('TMG_FOB_USD', 'TXG_FOB_USD')
+
+bridge <- fread(file=paste(data_DIR,"/countries.csv",sep=""),header=TRUE,colClasses=c("character","character"), sep=",",na.strings="")
+bridge <- as.data.frame(bridge)
+colnames(bridge) <- c('i_iso', 'i_iso_name')
+countries <- bridge[, 'i_iso_name']
+trade_types = c('Imports (million USD)', 'Exports (million USD)')# c('TMG_FOB_USD+TMG_CIF_USD', 'TXG_FOB_USD')
