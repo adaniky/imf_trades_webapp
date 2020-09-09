@@ -1,4 +1,4 @@
-pkgs <- c('shiny')
+pkgs <- c('shiny', 'jsonlite', 'batchscr')
 for(i in pkgs){if(!require(i, character.only = T))install.packages(i); library(i, character.only = T)}
 
 source('raw_DOTS.R')
