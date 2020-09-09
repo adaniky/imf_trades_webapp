@@ -91,7 +91,7 @@ get_imf_date <- function(gfi_dates, trade_type, countries)
     return(res)
   }
 
-bridge <- fread(file=paste(data_DIR,"/countries.csv",sep=""),header=TRUE,colClasses=c("character","character"), sep=",",na.strings="")
+bridge <- read.csv(file=paste(data_DIR,"/countries.csv",sep=""),header=TRUE,colClasses=c("character","character"), sep=",",na.strings="")
 bridge <- as.data.frame(bridge)
 colnames(bridge) <- c('i_iso', 'i_iso_name')
 countries <- bridge[, 'i_iso_name']
