@@ -1,19 +1,18 @@
 library(shiny)
-
-# Define server logic required to generate and plot a random distribution
+library(datasets)
+# Define server logic required to summarize and view the selected dataset
 shinyServer(function(input, output) {
   
-  # Expression that generates a plot of the distribution. The expression
-  # is wrapped in a call to renderPlot to indicate that:
-  #
-  #  1) It is "reactive" and therefore should be automatically 
-  #     re-executed when inputs change
-  #  2) Its output type is a plot 
-  #
-  output$distPlot <- renderPlot({
-    
-    # generate an rnorm distribution and plot it
-    dist <- rnorm(input$obs)
-    hist(dist)
+  # Return the requested dataset
+  
+  datasetInput <- reactive({
+    unique(get_imf_date(input$year,
+                        input$type,
+                        input$country))
+  })
+  
+  # Show the dataset
+  output$view <- renderTable({
+    datasetInput()
   })
 })

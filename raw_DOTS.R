@@ -1,13 +1,7 @@
-  rm(list = ls())
-  pkgs <- c('jsonlite', 'data.table', 'batchscr', 'curl')
-  for(i in pkgs){if(!require(i, character.only = T))install.packages(i); library(i, character.only = T)}
-  
-  data_DIR = getwd()  
+data_DIR = getwd()  
 
-  gfi_dates <- 2010:2019
+  gfi_dates <- 2020:2000
   cif_margin_exog <- .06       # CIF/FOB margin applied to imports for countries not reporting on FOB basis (Marini-Dippelsman-Stanger[2018] p. 11)
-  t_start <- as.numeric(Sys.time())
-  mem_prof <- c()
   
   get_imf_date <- function(gfi_dates, trade_type, countries)
   { 
@@ -96,18 +90,8 @@
     return(res)
   }
  
-  na_strings <- c("",".","e")
-  #####################################################################
-    countries <- c('AF')
     bridge <- fread(file=paste(data_DIR,"/countries.csv",sep=""),header=TRUE,colClasses=c("character","character"), sep=",",na.strings="")
-    cat('bridge readed')
     bridge <- as.data.frame(bridge)
     colnames(bridge) <- c('i_iso', 'i_iso_name')
     iso_countries <- bridge[, 'i_iso']
-    #iso_countries <- as.character(bridge[, 'i_iso'])
-    dots_data <-get_imf_date(gfi_dates,  'TMG_FOB_USD+TXG_FOB_USD', iso_countries)
-    # fwrite(dots_data,file=paste(data_DIR,"/data_output/DOTS.csv",sep=""),append=FALSE,col.names = TRUE,sep=",",row.names = FALSE,na="")
-    dots_data <- unique(dots_data)
-    m_fob_raw <- dots_data[dots_data$ind=='TMG_FOB_USD',]
-    x_fob_raw <- dots_data[dots_data$ind=='TXG_FOB_USD',] 
-    
+    trade_types = c('TMG_FOB_USD', 'TXG_FOB_USD')
